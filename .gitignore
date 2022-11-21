@@ -1,0 +1,42 @@
+## cmake
+builddir
+
+## bazel
+bazel-*
+
+## clang
+compile_commands.json
+
+## python
+*.pyc
+
+## poetry
+dist
+
+## golang
+coverage.txt
+tutorial/thrift/tools/proxy-buffered-to-framed
+gen-go
+
+## maven
+tutorial/thrift/echo/java/target/*
+tutorial/protobuf/serialize/java/bin/
+
+## gradle
+.gradle
+tutorial/thrift/echo/java/build
+tutorial/thrift/echo/java/bin
+
+## rust
+target/
+
+## vscode
+.vscode/settings.json
+
+## thrift
+gen_rs
+gen-go
+tutorial/thrift/echo/idl/echo.rs
+tutorial/thrift/serialize/idl/types.rs
+tutorial/protobuf/serialize/idl/mod.rs
+tutorial/protobuf/serialize/idl/types.rs
