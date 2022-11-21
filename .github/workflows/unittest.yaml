@@ -1,0 +1,45 @@
+name: Unittest
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * 6'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:22.10
+    steps:
+      - uses: actions/checkout@v3
+      - run: apt-get update
+      - run: apt-get install -y curl wget git gcc g++ cmake ninja-build lld python3 python3-pip
+      - run: pip3 install conan
+      - run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+      - uses: bazelbuild/setup-bazelisk@v2
+
+      - name: mount conan cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.conan/data
+          key: conan-${{ runner.os }}-${{ hashFiles('build/conan/conanfile.txt') }}
+
+      - name: install conan package
+        run: task && task
+        working-directory: build/conan
+
+      - name: setup buildbuddy
+        run: |
+          echo 'build --bes_results_url=https://app.buildbuddy.io/invocation/' >> .bazelrc
+          echo 'build --bes_backend=grpcs://remote.buildbuddy.io' >> .bazelrc
+          echo 'build --remote_cache=grpcs://remote.buildbuddy.io' >> .bazelrc
+          echo 'build --remote_timeout=3600' >> .bazelrc
+          echo 'build --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_API }}' >> .bazelrc
+
+      - run: bazel build --remote_download_minimal //...
+      - run: bazel test //...
+
+      - uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+        timeout-minutes: 30
