@@ -1,7 +1,7 @@
 # Copyright (c) 2022-2022 curoky(cccuroky@gmail.com).
 #
 # This file is part of learn-kernel.
-# See https://github.com/curoky/learn-sys for further info.
+# See https://github.com/curoky/learn-kernel for further info.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
