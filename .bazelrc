@@ -1,0 +1,6 @@
+build --check_visibility=false
+build --compilation_mode=dbg
+build --dynamic_mode=off
+build --remote_download_toplevel
+build --cxxopt="-std=c++20"
+build --experimental_remote_cache_compression
