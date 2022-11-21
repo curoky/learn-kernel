@@ -72,10 +72,8 @@ def dep_libs():
 
     http_archive(
         name = "com_github_catchorg_catch2",
-        urls = [
-            "https://github.com/catchorg/Catch2/archive/refs/heads/devel.tar.gz",
-        ],
-        strip_prefix = "Catch2-devel",
+        urls = ["https://github.com/catchorg/Catch2/archive/refs/tags/v3.2.0.tar.gz"],
+        strip_prefix = "Catch2-3.2.0",
     )
 
     http_archive(
